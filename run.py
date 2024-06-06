@@ -14,7 +14,7 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
         np.random.seed(configs.fix_seed)
 
     torch.cuda.empty_cache()
-    curdir_path, result_path, checkpoint_path, log_path = prepare_saving_dir(parse_args)
+    curdir_path, result_path, checkpoint_path, log_path, config_path = prepare_saving_dir(parse_args)
 
     printl(f"{'=' * 128}")
     printl("               ______   ______   .__   __. .___________..______          ___   .___________.  ______ .______      ")
