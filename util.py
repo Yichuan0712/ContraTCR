@@ -32,7 +32,7 @@ def prepare_saving_dir(parse_args):
     Prepare a directory for saving a training results.
     """
     # Create a unique identifier for the run based on the current time.
-    run_id = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+    run_id = datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')
     curdir_path = os.getcwd()
 
     result_path = os.path.abspath(os.path.join(parse_args.result_path, run_id))
