@@ -27,6 +27,12 @@ def printl(*args, log_path=None, **kwargs):
         sys.stdout = old_stdout
 
 
+def printl_file_content(file_path, log_path):
+    with open(file_path, 'r') as file:
+        content = file.read()
+        printl(content, log_path)
+
+
 def prepare_saving_dir(parse_args):
     """
     Prepare a directory for saving a training results.
