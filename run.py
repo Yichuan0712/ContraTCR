@@ -8,7 +8,7 @@ from box import Box
 import sys
 
 
-def main(parse_args, configs, valid_fold_number, test_fold_number):
+def main(parse_args, configs, valid_fold_index, test_fold_index):
     if type(configs.fix_seed) == int:
         torch.manual_seed(configs.fix_seed)
         torch.random.manual_seed(configs.fix_seed)
@@ -25,19 +25,31 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl("             |  `----.|  `--'  | |  |\   |     |  |     |  |\  \----./  _____  \   |  |     |  `----.|  |\  \----.")
     printl("              \______| \______/  |__| \__|     |__|     | _| `._____/__/     \__\  |__|      \______|| _| `._____|")
     printl()
+
     printl(f"{'=' * 128}", log_path=log_path)
     printl(configs.description, log_path=log_path)
+
     printl(f"{'=' * 128}", log_path=log_path)
     command = ''.join(sys.argv)
     printl(f"Called with: python {command}", log_path=log_path)
+
     printl(f"{'=' * 128}", log_path=log_path)
     printl(f"Result Directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint Directory: {checkpoint_path}", log_path=log_path)
     printl(f"Log Directory: {log_path}", log_path=log_path)
     printl(f"Config Directory: {config_path}", log_path=log_path)
     printl(f"Current Working Directory: {curdir_path}", log_path=log_path)
+
     printl(f"{'=' * 128}", log_path=log_path)
     printl_file(parse_args.config_path, log_path=log_path)
+
+    printl(f"{'=' * 128}", log_path=log_path)
+    all_folds = [0, 1, 2, 3, 4]
+    train_folds = [fold for fold in all_folds if fold not in [valid_fold_index, test_fold_index]]
+    printl(f"Training Fold Indices: {train_folds}", log_path=log_path)
+    printl(f"Validation Fold Index: {valid_fold_index}", log_path=log_path)
+    printl(f"Test Fold Index: {test_fold_index}", log_path=log_path)
+
     printl(f"{'=' * 128}", log_path=log_path)
 
 
@@ -70,11 +82,11 @@ if __name__ == "__main__":
         configs = Box(config_dict)
 
     for i in range(1):
-        valid_fold_number = i
-        if valid_fold_number == 4:
-            test_fold_number = 0
+        valid_fold_index = i
+        if valid_fold_index == 4:
+            test_fold_index = 0
         else:
-            test_fold_number = valid_fold_number + 1
-        main(parse_args, configs, valid_fold_number, test_fold_number)
+            test_fold_index = valid_fold_index + 1
+        main(parse_args, configs, valid_fold_index, test_fold_index)
 
 
