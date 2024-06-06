@@ -1,16 +1,33 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import argparse
+import yaml
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def main(parse_args, config_dict, valid_fold_number, test_fold_number):
+    return
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='ContraTCR')
+    parser.add_argument("--config_path", help="Path to the configuration file. Defaults to './config/default/config.yaml'. This file contains all necessary parameters and settings for the operation.", default='./config/default/config.yaml')
+    parser.add_argument("--mode", help="Operation mode of the script. Use 'train' for training the model and 'predict' for making predictions using an existing model. Default mode is 'train'.", default='train')
+    parser.add_argument("--result_path", default='./result/default/',
+                        help="Path where the results will be stored. If not set, results are saved to './result/default/'. This can include prediction outputs or saved models.")
+    parser.add_argument("--resume_path", default=None,
+                        help="Path to a previously saved model checkpoint. If specified, training or prediction will resume from this checkpoint. By default, this is None, meaning training starts from scratch.")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    parse_args = parser.parse_args()
+
+    config_path = parse_args.config_path
+    with open(config_path) as file:
+        config_dict = yaml.full_load(file)
+
+    for i in range(1):
+        valid_fold_number = i
+        if valid_fold_number == 4:
+            test_fold_number = 0
+        else:
+            test_fold_number = valid_fold_number + 1
+        main(parse_args, config_dict, valid_fold_number, test_fold_number)
+        break
+
+
