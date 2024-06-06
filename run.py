@@ -3,6 +3,7 @@ import yaml
 
 
 def main(parse_args, config_dict, valid_fold_number, test_fold_number):
+    print('main')
     return
 
 
