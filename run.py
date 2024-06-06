@@ -1,11 +1,16 @@
 import argparse
 import yaml
-from util import load_configs()
-
+from util import load_configs
+import torch
+import numpy as np
 
 def main(parse_args, config_dict, valid_fold_number, test_fold_number):
     configs = load_configs(config_dict)
-    print('main')
+    if type(configs.fix_seed) == int:
+        torch.manual_seed(configs.fix_seed)
+        torch.random.manual_seed(configs.fix_seed)
+        np.random.seed(configs.fix_seed)
+
     return
 
 
