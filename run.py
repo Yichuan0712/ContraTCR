@@ -1,6 +1,6 @@
 import argparse
 import yaml
-from util import printl, load_configs
+from util import printl
 import torch
 import numpy as np
 from box import Box
