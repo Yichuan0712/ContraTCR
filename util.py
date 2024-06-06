@@ -27,9 +27,11 @@ def printl(*args, log_path=None, **kwargs):
         sys.stdout = old_stdout
 
 
-def printl_file_content(file_path, log_path):
+def printl_file_content(file_path, log_path, show_name=True):
     with open(file_path, 'r') as file:
         content = file.read()
+        if show_name:
+            content = "    " + content
         printl(content, log_path=log_path)
 
 
