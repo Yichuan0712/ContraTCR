@@ -31,7 +31,7 @@ def printl_file(file_path, log_path, show_name=True):
     filename = os.path.basename(file_path)
     with open(file_path, 'r') as file:
         if show_name:
-            printl(f"Log File: {filename}", log_path=log_path)
+            printl(f"{filename}", log_path=log_path)
         for line in file:
             formatted_line = "    " + line.rstrip()
             printl(formatted_line, log_path=log_path)
