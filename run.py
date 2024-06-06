@@ -5,6 +5,7 @@ from util import prepare_saving_dir
 import torch
 import numpy as np
 from box import Box
+import sys
 
 
 def main(parse_args, configs, valid_fold_number, test_fold_number):
@@ -26,6 +27,9 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl()
     printl(f"{'=' * 128}", log_path=log_path)
     printl(configs.description, log_path=log_path)
+    printl(f"{'=' * 128}", log_path=log_path)
+    command = ''.join(sys.argv)
+    printl(f"Called with: python {command}", log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
     printl(f"Result Directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint Directory: {checkpoint_path}", log_path=log_path)
