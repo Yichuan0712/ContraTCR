@@ -30,7 +30,7 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl(f"Result Directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint Directory: {checkpoint_path}", log_path=log_path)
     printl(f"Log Directory: {log_path}", log_path=log_path)
-    printl(f"Config Directory: {parse_args.config_path}", log_path=log_path)
+    printl(f"Config Directory: {config_path}", log_path=log_path)
     printl(f"Current Working Directory: {curdir_path}", log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
     printl_file_content(parse_args.config_path, log_path=log_path)
