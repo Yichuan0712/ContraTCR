@@ -39,6 +39,8 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl(f"{'=' * 128}", log_path=log_path)
     printl_file(parse_args.config_path, log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
+
+
     return
 
 
