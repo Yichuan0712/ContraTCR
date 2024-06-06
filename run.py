@@ -50,6 +50,5 @@ if __name__ == "__main__":
         else:
             test_fold_number = valid_fold_number + 1
         main(parse_args, configs, valid_fold_number, test_fold_number)
-        break
 
 
