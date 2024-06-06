@@ -8,7 +8,8 @@ def main(parse_args, config_dict, valid_fold_number, test_fold_number):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='ContraTCR')
+    parser = argparse.ArgumentParser(description='ContraTCR: A tool for training and predicting TCR binding using '
+                                                 'contrastive learning.')
     parser.add_argument("--config_path", help="Path to the configuration file. Defaults to "
                                               "'./config/default/config.yaml'. This file contains all necessary "
                                               "parameters and settings for the operation.",
