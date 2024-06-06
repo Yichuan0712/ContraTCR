@@ -1,6 +1,6 @@
 import argparse
 import yaml
-from util import printl, printl_file_content
+from util import printl, printl_file
 from util import prepare_saving_dir
 import torch
 import numpy as np
@@ -37,7 +37,7 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl(f"Config Directory: {config_path}", log_path=log_path)
     printl(f"Current Working Directory: {curdir_path}", log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
-    printl_file_content(parse_args.config_path, log_path=log_path)
+    printl_file(parse_args.config_path, log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
     return
 

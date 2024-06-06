@@ -27,12 +27,14 @@ def printl(*args, log_path=None, **kwargs):
         sys.stdout = old_stdout
 
 
-def printl_file_content(file_path, log_path, show_name=True):
+def printl_file(file_path, log_path, show_name=True):
+    filename = os.path.basename(file_path)
     with open(file_path, 'r') as file:
-        content = file.read()
         if show_name:
-            content = "    " + content
-        printl(content, log_path=log_path)
+            printl(f"Log File: {filename}", log_path=log_path)
+        for line in file:
+            formatted_line = "    " + line.rstrip()
+            printl(formatted_line, log_path=log_path)
 
 
 def prepare_saving_dir(parse_args):
