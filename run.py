@@ -10,7 +10,7 @@ def main(parse_args, config_dict, valid_fold_number, test_fold_number):
         torch.manual_seed(configs.fix_seed)
         torch.random.manual_seed(configs.fix_seed)
         np.random.seed(configs.fix_seed)
-
+    print(configs)
     return
 
 
