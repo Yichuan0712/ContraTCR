@@ -1,2 +1,2 @@
 fix_seed: 42
-description: "ContraTCR v240606 by Yichuan"
+description: "ContraTCR version 240606 - TCR binding prediction using contrastive learning."
