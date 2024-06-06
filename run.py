@@ -24,6 +24,8 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     printl("              \______| \______/  |__| \__|     |__|     | _| `._____/__/     \__\  |__|      \______|| _| `._____|")
     printl()
     printl(f"{'=' * 128}", log_path=log_path)
+    printl(configs.description, log_path=log_path)
+    printl(f"{'=' * 128}", log_path=log_path)
     printl(f"Result Directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint Directory: {checkpoint_path}", log_path=log_path)
     printl(f"Log Directory: {log_path}", log_path=log_path)
