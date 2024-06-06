@@ -15,12 +15,12 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
     torch.cuda.empty_cache()
     curdir_path, result_path, checkpoint_path, log_path = prepare_saving_dir(parse_args)
 
-    printl(f"{'=' * 80}", log_path=log_path)
+    printl(f"{'=' * 128}", log_path=log_path)
     printl(f"Result directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint directory: {checkpoint_path}", log_path=log_path)
     printl(f"Log directory: {log_path}", log_path=log_path)
     printl(f"Current Working Directory: {curdir_path}", log_path=log_path)
-    printl(f"{'=' * 80}\n", log_path=log_path)
+    printl(f"{'=' * 128}\n", log_path=log_path)
     return
 
 
