@@ -27,7 +27,7 @@ def printl(*args, log_path=None, **kwargs):
         sys.stdout = old_stdout
 
 
-def prepare_saving_dir(parse_args, configs):
+def prepare_saving_dir(parse_args):
     """
     Prepare a directory for saving a training results.
     """
