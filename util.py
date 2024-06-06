@@ -1,4 +1,3 @@
-from box import Box
 import sys
 
 def printl(*args, log_path=None, **kwargs):
@@ -21,8 +20,3 @@ def printl(*args, log_path=None, **kwargs):
         print(*args, **kwargs)  # Output goes to the log file
         sys.stdout.close()
         sys.stdout = old_stdout
-
-
-def load_configs(config_dict):
-    configs = Box(config_dict)
-    return configs

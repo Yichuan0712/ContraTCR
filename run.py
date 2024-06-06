@@ -3,16 +3,14 @@ import yaml
 from util import printl, load_configs
 import torch
 import numpy as np
+from box import Box
 
 
-def main(parse_args, config_dict, valid_fold_number, test_fold_number):
-    print(config_dict)
-    configs = load_configs(config_dict)
+def main(parse_args, configs, valid_fold_number, test_fold_number):
     if type(configs.fix_seed) == int:
         torch.manual_seed(configs.fix_seed)
         torch.random.manual_seed(configs.fix_seed)
         np.random.seed(configs.fix_seed)
-    print(configs)
     return
 
 
@@ -39,6 +37,7 @@ if __name__ == "__main__":
     config_path = parse_args.config_path
     with open(config_path) as file:
         config_dict = yaml.full_load(file)
+        configs = Box(config_dict)
 
     for i in range(1):
         valid_fold_number = i
@@ -46,7 +45,7 @@ if __name__ == "__main__":
             test_fold_number = 0
         else:
             test_fold_number = valid_fold_number + 1
-        main(parse_args, config_dict, valid_fold_number, test_fold_number)
+        main(parse_args, configs, valid_fold_number, test_fold_number)
         break
 
 
