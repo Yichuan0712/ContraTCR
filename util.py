@@ -1,10 +1,15 @@
 import sys
+import datetime
+import os
+import shutil
+from pathlib import Path
+
 
 def printl(*args, log_path=None, **kwargs):
     """
     Enhanced print function that logs to a file if log_path is provided.
 
-    Parameters:
+    Args:
     *args: Variable length argument list, passed to print.
     log_path (str, optional): The file path to log the output. If None, acts like the standard print.
     **kwargs: Arbitrary keyword arguments, passed to print.
@@ -20,3 +25,25 @@ def printl(*args, log_path=None, **kwargs):
         print(*args, **kwargs)  # Output goes to the log file
         sys.stdout.close()
         sys.stdout = old_stdout
+
+
+def prepare_saving_dir(parse_args, configs):
+    """
+    Prepare a directory for saving a training results.
+    """
+    # Create a unique identifier for the run based on the current time.
+    run_id = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+    curdir_path = os.getcwd()
+
+    result_path = os.path.abspath(os.path.join(parse_args.result_path, run_id))
+    checkpoint_path = os.path.join(result_path, 'checkpoint')
+    log_path = os.path.join(result_path, "loginfo.log")
+
+    Path(result_path).mkdir(parents=True, exist_ok=True)
+    Path(checkpoint_path).mkdir(parents=True, exist_ok=True)
+
+    # Copy the config file to the result directory.
+    shutil.copy(parse_args.config_path, result_path)
+
+    # Return the path to the result directory.
+    return curdir_path, result_path, checkpoint_path, log_path

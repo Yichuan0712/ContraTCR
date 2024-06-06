@@ -1,6 +1,6 @@
 import argparse
 import yaml
-from util import printl
+from util import printl, prepare_saving_dir
 import torch
 import numpy as np
 from box import Box
@@ -11,6 +11,10 @@ def main(parse_args, configs, valid_fold_number, test_fold_number):
         torch.manual_seed(configs.fix_seed)
         torch.random.manual_seed(configs.fix_seed)
         np.random.seed(configs.fix_seed)
+
+    torch.cuda.empty_cache()
+    curdir_path, result_path, checkpoint_path, log_path = prepare_saving_dir(parse_args)
+
     return
 
 
