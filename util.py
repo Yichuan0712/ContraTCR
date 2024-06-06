@@ -44,7 +44,7 @@ def prepare_saving_dir(parse_args):
     result_path = os.path.abspath(os.path.join(parse_args.result_path, run_id))
     checkpoint_path = os.path.join(result_path, 'checkpoint')
     log_path = os.path.join(result_path, "loginfo.log")
-    config_path = os.path.abspath(parse_args.config_path)
+    config_path = os.path.join(result_path, parse_args.config_path)
 
     Path(result_path).mkdir(parents=True, exist_ok=True)
     Path(checkpoint_path).mkdir(parents=True, exist_ok=True)
