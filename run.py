@@ -9,12 +9,20 @@ def main(parse_args, config_dict, valid_fold_number, test_fold_number):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ContraTCR')
-    parser.add_argument("--config_path", help="Path to the configuration file. Defaults to './config/default/config.yaml'. This file contains all necessary parameters and settings for the operation.", default='./config/default/config.yaml')
-    parser.add_argument("--mode", help="Operation mode of the script. Use 'train' for training the model and 'predict' for making predictions using an existing model. Default mode is 'train'.", default='train')
+    parser.add_argument("--config_path", help="Path to the configuration file. Defaults to "
+                                              "'./config/default/config.yaml'. This file contains all necessary "
+                                              "parameters and settings for the operation.",
+                        default='./config/default/config.yaml')
+    parser.add_argument("--mode", help="Operation mode of the script. Use 'train' for training the model and "
+                                       "'predict' for making predictions using an existing model. Default mode is "
+                                       "'train'.", default='train')
     parser.add_argument("--result_path", default='./result/default/',
-                        help="Path where the results will be stored. If not set, results are saved to './result/default/'. This can include prediction outputs or saved models.")
+                        help="Path where the results will be stored. If not set, results are saved to "
+                             "'./result/default/'. This can include prediction outputs or saved models.")
     parser.add_argument("--resume_path", default=None,
-                        help="Path to a previously saved model checkpoint. If specified, training or prediction will resume from this checkpoint. By default, this is None, meaning training starts from scratch.")
+                        help="Path to a previously saved model checkpoint. If specified, training or prediction will "
+                             "resume from this checkpoint. By default, this is None, meaning training starts from "
+                             "scratch.")
 
     parse_args = parser.parse_args()
 
