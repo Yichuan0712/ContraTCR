@@ -76,7 +76,12 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     """
     printl(f"{'=' * 128}", log_path=log_path)
     tokenizer = get_tokenizer(configs)
-    printl("Data Loading Complete.")
+    printl("Tokenizer initialization complete.")
+    """
+    Encoder
+    """
+    printl(f"{'=' * 128}", log_path=log_path)
+    encoder = get_model(configs)
     return
 
 
