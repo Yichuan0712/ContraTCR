@@ -1,10 +1,32 @@
+import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 import pandas as pd
 
+
 class miniDataset(Dataset):
-    def __init__(self):
-        return
+    def __init__(self, dataframe, n_pos, n_neg):
+        """
+        Initializes the dataset object.
+        :param dataframe: A DataFrame containing the data to be used in this dataset.
+        """
+        # Assuming the last column of dataframe is the label and the rest are features
+        self.features = torch.tensor(dataframe.iloc[:, :-1].values, dtype=torch.float32)
+        self.labels = torch.tensor(dataframe.iloc[:, -1].values, dtype=torch.long)
+
+    def __len__(self):
+        """
+        Returns the number of samples in the dataset.
+        """
+        return len(self.features)
+
+    def __getitem__(self, idx):
+        """
+        Retrieves the feature tensor and label tensor at the specified index.
+        :param idx: Index of the data point to retrieve.
+        :return: A tuple containing the feature tensor and label tensor.
+        """
+        return self.features[idx], self.labels[idx]
 
 
 def get_dataloader(configs, valid_fold_index, test_fold_index):
@@ -36,6 +58,7 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
         train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
         valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=False)
         test_loader = DataLoader(test_dataset, batch_size=configs.batch_size, shuffle=False)
+        # Valid和Test应该怎么写?
 
         return {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
     else:
