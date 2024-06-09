@@ -27,7 +27,7 @@ def prepare_esm_model(model_name, configs):
     # Freeze all layers
     for param in model.parameters():
         param.requires_grad = False
-    elif configs.PEFT == "frozen":
+    elif configs.training_mode  == "frozen":
         # Freeze all layers
         for param in model.parameters():
             param.requires_grad = False
