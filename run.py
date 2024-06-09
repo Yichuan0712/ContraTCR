@@ -16,7 +16,9 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
 
     torch.cuda.empty_cache()
     curdir_path, result_path, checkpoint_path, log_path, config_path = prepare_saving_dir(parse_args)
-
+    """
+    Banner
+    """
     printl(f"{'=' * 128}")
     printl("               ______   ______   .__   __. .___________..______          ___   .___________.  ______ .______      ")
     printl("              /      | /  __  \  |  \ |  | |           ||   _  \        /   \  |           | /      ||   _  \     ")
@@ -25,32 +27,40 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     printl("             |  `----.|  `--'  | |  |\   |     |  |     |  |\  \----./  _____  \   |  |     |  `----.|  |\  \----.")
     printl("              \______| \______/  |__| \__|     |__|     | _| `._____/__/     \__\  |__|      \______|| _| `._____|")
     printl()
-
+    """
+    Description
+    """
     printl(f"{'=' * 128}", log_path=log_path)
     printl(configs.description, log_path=log_path)
-
+    """
+    CMD
+    """
     printl(f"{'=' * 128}", log_path=log_path)
     command = ''.join(sys.argv)
     printl(f"Called with: python {command}", log_path=log_path)
-
+    """
+    Directories
+    """
     printl(f"{'=' * 128}", log_path=log_path)
     printl(f"Result Directory: {result_path}", log_path=log_path)
     printl(f"Checkpoint Directory: {checkpoint_path}", log_path=log_path)
     printl(f"Log Directory: {log_path}", log_path=log_path)
     printl(f"Config Directory: {config_path}", log_path=log_path)
     printl(f"Current Working Directory: {curdir_path}", log_path=log_path)
-
+    """
+    Configration File
+    """
     printl(f"{'=' * 128}", log_path=log_path)
     printl_file(parse_args.config_path, log_path=log_path)
-
+    """
+    Fold Split
+    """
     printl(f"{'=' * 128}", log_path=log_path)
     all_folds = [0, 1, 2, 3, 4]
     train_folds = [fold for fold in all_folds if fold not in [valid_fold_index, test_fold_index]]
     printl(f"Training Fold Indices: {train_folds}", log_path=log_path)
     printl(f"Validation Fold Index: {valid_fold_index}", log_path=log_path)
     printl(f"Test Fold Index: {test_fold_index}", log_path=log_path)
-
-    printl(f"{'=' * 128}", log_path=log_path)
     """
     Dataloader
     """
@@ -60,7 +70,12 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     printl(f'Number of Steps for Validation Data: {len(dataloaders_dict["valid"])}', log_path=log_path)
     printl(f'Number of Steps for Test Data: {len(dataloaders_dict["test"])}', log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
-
+    """
+    Tokenizer
+    """
+    printl(f"{'=' * 128}", log_path=log_path)
+    tokenizer = get_tokenizer(configs, curdir_path)
+    printl("Data Loading Complete.")
     return
 
 
