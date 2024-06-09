@@ -48,11 +48,11 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
 
         # Create datasets
         train_dataset = miniDataset(train_data)
-        print(train_dataset)
+        print(train_dataset[0])
         valid_dataset = miniDataset(valid_data)
-        print(len(valid_dataset))
+        # print(len(valid_dataset))
         test_dataset = miniDataset(test_data)
-        print(len(test_dataset))
+        # print(len(test_dataset))
 
         # Create dataloaders
         train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
