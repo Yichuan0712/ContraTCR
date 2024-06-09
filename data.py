@@ -53,13 +53,13 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
         print(len(valid_dataset))
         test_dataset = miniDataset(test_data)
         print(len(test_dataset))
-        #
-        # # Create dataloaders
-        # train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
-        # valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=True)
-        # test_loader = DataLoader(test_dataset, batch_size=configs.batch_size, shuffle=False)
-        # # Valid和Test应该怎么写?
-        #
-        # return {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
+
+        # Create dataloaders
+        train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
+        valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=True)
+        test_loader = DataLoader(test_dataset, batch_size=configs.batch_size, shuffle=False)
+        # Valid和Test应该怎么写?
+
+        return {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
     else:
         raise ValueError("Wrong dataset specified.")
