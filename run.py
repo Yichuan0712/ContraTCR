@@ -7,7 +7,7 @@ import numpy as np
 from box import Box
 import sys
 from data import get_dataloader
-from model import get_tokenizer
+from model import get_tokenizer, get_model
 
 def main(parse_args, configs, valid_fold_index, test_fold_index):
     if type(configs.fix_seed) == int:
