@@ -56,7 +56,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     """
     dataloaders_dict = get_dataloader(configs, valid_fold_index, test_fold_index)
     printl("Data Loading Complete.")
-    printl(f'number of steps for training data: {len(dataloaders_dict["train"])}', log_path=log_path, drop_last=True)
+    printl(f'number of steps for training data: {len(dataloaders_dict["train"])}', log_path=log_path)
     printl(f'number of steps for valid data: {len(dataloaders_dict["valid"])}', log_path=log_path)
     printl(f'number of steps for test data: {len(dataloaders_dict["test"])}', log_path=log_path)
     printl(f"{'=' * 128}", log_path=log_path)
