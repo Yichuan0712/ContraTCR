@@ -1,5 +1,7 @@
 from transformers import AutoTokenizer
 from torch import nn
+from transformers import EsmModel
+
 
 def get_tokenizer(configs):
     if 'facebook/esm2' in configs.encoder_name:
@@ -7,6 +9,7 @@ def get_tokenizer(configs):
     else:
         raise ValueError("Wrong tokenizer specified.")
     return tokenizer
+
 
 def get_model(configs):
     if 'facebook/esm2' in configs.encoder_name:
@@ -17,6 +20,24 @@ def get_model(configs):
     else:
         raise ValueError("Wrong model specified")
     return encoder
+
+
+def prepare_esm_model(model_name, configs):
+    model = EsmModel.from_pretrained(model_name)
+    # Freeze all layers
+    for param in model.parameters():
+        param.requires_grad = False
+    elif configs.PEFT == "frozen":
+        # Freeze all layers
+        for param in model.parameters():
+            param.requires_grad = False
+    elif configs.PEFT == "PFT":
+        # Allow the parameters of the last transformer block to be updated during fine-tuning
+        for param in model.encoder.layer[configs.train_settings.fine_tune_lr:].parameters():
+            param.requires_grad = True
+        for param in model.pooler.parameters():
+            param.requires_grad = False
+    return model
 
 class Encoder(nn.Module):
     def __init__(self, configs, model_name='facebook/esm2_t33_650M_UR50D', model_type='esm_v2'):
@@ -30,29 +51,6 @@ class Encoder(nn.Module):
         self.pooling_layer = nn.AdaptiveAvgPool1d(1)
 
     def forward(self, encoded_sequence, id, id_frags_list, seq_frag_tuple, pos_neg, warm_starting):
-        """
-        Batch is built before forward(), in train_loop()
-        Batch is either (anchor) or (anchor+pos+neg)
-
-        if apply supcon:
-            if not warming starting:
-                if pos_neg is None: ------------------> batch should be built as (anchor) in train_loop()
-                    "CASE A"
-                    get motif_logits from batch
-                    get classification_head from batch
-                else: --------------------------------> batch should be built as (anchor+pos+neg) in train_loop()
-                    "CASE B"
-                    get motif_logits from batch
-                    get classification_head from batch
-                    get projection_head from batch
-            else: ------------------------------------> batch should be built as (anchor+pos+neg) in train_loop()
-                "CASE C"
-                get projection_head from batch
-        else: ----------------------------------------> batch should be built as (anchor) in train_loop()
-            "CASE D"
-            get motif_logits from batch
-            get classification_head from batch
-        """
         classification_head = None
         motif_logits = None
         projection_head = None
