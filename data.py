@@ -56,7 +56,7 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
 
         # Create dataloaders
         train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
-        valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=False)
+        valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=True)
         test_loader = DataLoader(test_dataset, batch_size=configs.batch_size, shuffle=False)
         # Valid和Test应该怎么写?
 
