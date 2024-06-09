@@ -7,6 +7,7 @@ import numpy as np
 from box import Box
 import sys
 from data import get_dataloader
+from model import get_tokenizer
 
 def main(parse_args, configs, valid_fold_index, test_fold_index):
     if type(configs.fix_seed) == int:
@@ -74,7 +75,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     Tokenizer
     """
     printl(f"{'=' * 128}", log_path=log_path)
-    tokenizer = get_tokenizer(configs, curdir_path)
+    tokenizer = get_tokenizer(configs)
     printl("Data Loading Complete.")
     return
 
