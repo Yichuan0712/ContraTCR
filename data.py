@@ -18,7 +18,7 @@ class miniDataset(Dataset):
         """
         Returns the number of samples in the dataset.
         """
-        return len(self.features)
+        return len(self.peptide)
 
     def __getitem__(self, idx):
         """
