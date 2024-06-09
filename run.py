@@ -35,15 +35,6 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     command = ''.join(sys.argv)
     printl(f"Called with: python {command}", log_path=log_path)
     """
-    Random Seed
-    """
-    if type(configs.fix_seed) == int:
-        torch.manual_seed(configs.fix_seed)
-        torch.random.manual_seed(configs.fix_seed)
-        np.random.seed(configs.fix_seed)
-        printl(f"{'=' * 128}", log_path=log_path)
-        printl(f'Random seed set to {configs.fix_seed}')
-    """
     Directories
     """
     printl(f"{'=' * 128}", log_path=log_path)
@@ -57,6 +48,15 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     """
     printl(f"{'=' * 128}", log_path=log_path)
     printl_file(parse_args.config_path, log_path=log_path)
+    """
+    Random Seed
+    """
+    if type(configs.fix_seed) == int:
+        torch.manual_seed(configs.fix_seed)
+        torch.random.manual_seed(configs.fix_seed)
+        np.random.seed(configs.fix_seed)
+        printl(f"{'=' * 128}", log_path=log_path)
+        printl(f'Random seed set to {configs.fix_seed}')
     """
     Fold Split
     """
