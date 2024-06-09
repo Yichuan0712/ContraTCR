@@ -14,7 +14,7 @@ def get_tokenizer(configs):
 
 def get_model(configs, log_path):
     if 'facebook/esm2' in configs.encoder_name:
-        encoder = Encoder(configs=configs, log_path)
+        encoder = Encoder(configs=configs, log_path=log_path)
     else:
         raise ValueError("Wrong model specified")
     return encoder

@@ -10,11 +10,6 @@ from data import get_dataloader
 from model import get_tokenizer, get_model
 
 def main(parse_args, configs, valid_fold_index, test_fold_index):
-    if type(configs.fix_seed) == int:
-        torch.manual_seed(configs.fix_seed)
-        torch.random.manual_seed(configs.fix_seed)
-        np.random.seed(configs.fix_seed)
-
     torch.cuda.empty_cache()
     curdir_path, result_path, checkpoint_path, log_path, config_path = prepare_saving_dir(parse_args)
     """
@@ -39,6 +34,15 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     printl(f"{'=' * 128}", log_path=log_path)
     command = ''.join(sys.argv)
     printl(f"Called with: python {command}", log_path=log_path)
+    """
+    Random Seed
+    """
+    if type(configs.fix_seed) == int:
+        torch.manual_seed(configs.fix_seed)
+        torch.random.manual_seed(configs.fix_seed)
+        np.random.seed(configs.fix_seed)
+        printl(f"{'=' * 128}", log_path=log_path)
+        printl(f'Random seed set to {configs.fix_seed}')
     """
     Directories
     """
@@ -81,7 +85,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     Encoder
     """
     printl(f"{'=' * 128}", log_path=log_path)
-    encoder = get_model(configs, log_path)
+    encoder = get_model(configs, log_path=log_path)
     return
 
 
