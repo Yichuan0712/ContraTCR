@@ -11,8 +11,8 @@ class miniDataset(Dataset):
         :param dataframe: A DataFrame containing the data to be used in this dataset.
         """
         # Using specific columns for features and labels
-        self.peptide = torch.tensor(dataframe['peptide'].values)
-        self.binding_TCR = torch.tensor(dataframe['binding_TCR'].values)
+        self.peptide = dataframe['peptide'].values
+        self.binding_TCR = dataframe['binding_TCR'].values
 
     def __len__(self):
         """
