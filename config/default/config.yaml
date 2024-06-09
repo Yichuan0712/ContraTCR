@@ -1,2 +1,3 @@
 fix_seed: 42
 description: "ContraTCR by Yichuan"
+dataset: "mini"
