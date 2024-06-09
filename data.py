@@ -37,6 +37,6 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
         valid_loader = DataLoader(valid_dataset, batch_size=configs.batch_size, shuffle=False)
         test_loader = DataLoader(test_dataset, batch_size=configs.batch_size, shuffle=False)
 
-        return train_loader, valid_loader, test_loader
+        return {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
     else:
         raise ValueError("Wrong dataset specified.")

@@ -6,7 +6,7 @@ import torch
 import numpy as np
 from box import Box
 import sys
-
+from data import get_dataloader
 
 def main(parse_args, configs, valid_fold_index, test_fold_index):
     if type(configs.fix_seed) == int:
@@ -53,10 +53,8 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     printl(f"{'=' * 128}", log_path=log_path)
     """
     Dataloader
-    0606: 数据集有点问题, 可能暂时不能划分fold
-    need a mini set
-    need
     """
+    dataloaders_dict = get_dataloader(configs, valid_fold_index, test_fold_index)
 
 
     return
