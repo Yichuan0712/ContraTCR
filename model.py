@@ -20,7 +20,7 @@ def get_model(configs):
     return encoder
 
 
-def get_esm(configs):
+def get_esm(configs, log_path):
     model = EsmModel.from_pretrained(configs.encoder_name)
     # Freeze all layers
     for param in model.parameters():
@@ -29,27 +29,23 @@ def get_esm(configs):
         # Freeze all layers
         for param in model.parameters():
             param.requires_grad = False
-        print("All model parameters have been frozen.")
+        printl("All model parameters have been frozen.", log_path=log_path)
     elif configs.training_mode == "finetune":
         # Allow the parameters of the last transformer block to be updated during fine-tuning
         for param in model.encoder.layer[configs.train_settings.fine_tune_layer:].parameters():
             param.requires_grad = True
-        print(f"Parameters in the last {len(model.encoder.layer) - configs.train_settings.fine_tune_layer} layers are trainable.")
+        printl(f"Parameters in the last {len(model.encoder.layer) - configs.train_settings.fine_tune_layer} layers are trainable.", log_path=log_path)
         for param in model.pooler.parameters():
             param.requires_grad = False
-        print("Pooling layer parameters have been frozen.")
+        printl("Pooling layer parameters have been frozen.", log_path=log_path)
     return model
 
 class Encoder(nn.Module):
-    def __init__(self, configs, model_name='facebook/esm2_t33_650M_UR50D', model_type='esm_v2'):
+    def __init__(self, configs, log_path):
         super().__init__()
-        self.model_type = model_type
-        if model_type == 'esm_v2':
-            self.model = get_esm(configs)
+        self.model = get_esm(configs, log_path)
         # self.pooling_layer = nn.AdaptiveAvgPool2d((None, 1))
-        self.combine = configs.decoder.combine
-        self.combine_DNN = configs.decoder.combine_DNN
-        self.pooling_layer = nn.AdaptiveAvgPool1d(1)
+        # self.pooling_layer = nn.AdaptiveAvgPool1d(1)
 
     def forward(self, encoded_sequence, id, id_frags_list, seq_frag_tuple, pos_neg, warm_starting):
         classification_head = None
