@@ -81,7 +81,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     Encoder
     """
     printl(f"{'=' * 128}", log_path=log_path)
-    encoder = get_model(configs)
+    encoder = get_model(configs, log_path)
     return
 
 
