@@ -5,14 +5,14 @@ import pandas as pd
 
 
 class miniDataset(Dataset):
-    def __init__(self, dataframe, n_pos, n_neg):
+    def __init__(self, dataframe):
         """
         Initializes the dataset object.
         :param dataframe: A DataFrame containing the data to be used in this dataset.
         """
-        # Assuming the last column of dataframe is the label and the rest are features
-        self.features = torch.tensor(dataframe.iloc[:, :-1].values, dtype=torch.float32)
-        self.labels = torch.tensor(dataframe.iloc[:, -1].values, dtype=torch.long)
+        # Using specific columns for features and labels
+        self.peptide = torch.tensor(dataframe['peptide'].values, dtype=torch.float32)
+        self.binding_TCR = torch.tensor(dataframe['binding_TCR'].values, dtype=torch.long)
 
     def __len__(self):
         """
@@ -43,16 +43,16 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
         # Combine and shuffle remaining data for training
         train_data = pd.concat([get_dataframe_mini(i) for i in range(5) if i not in [valid_fold_index, test_fold_index]],
                                ignore_index=True)
-
-        print([i for i in range(5) if i not in [valid_fold_index, test_fold_index]])
-
         train_data = train_data.sample(frac=1).reset_index(drop=True)
         # return all rows, avoid inserting the old index as a column in the new DataFrame
 
         # Create datasets
         train_dataset = miniDataset(train_data)
+        print(len(train_dataset))
         valid_dataset = miniDataset(valid_data)
+        print(len(valid_dataset))
         test_dataset = miniDataset(test_data)
+        print(len(test_dataset))
 
         # Create dataloaders
         train_loader = DataLoader(train_dataset, batch_size=configs.batch_size, shuffle=True)
