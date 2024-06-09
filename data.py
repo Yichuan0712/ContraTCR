@@ -48,7 +48,7 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
 
         # Create datasets
         train_dataset = miniDataset(train_data)
-        print(len(train_dataset))
+        print(type(train_dataset))
         valid_dataset = miniDataset(valid_data)
         print(len(valid_dataset))
         test_dataset = miniDataset(test_data)
