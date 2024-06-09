@@ -21,6 +21,9 @@ def get_dataloader(configs, valid_fold_index, test_fold_index):
         # Combine and shuffle remaining data for training
         train_data = pd.concat([get_dataframe_mini(i) for i in range(5) if i not in [valid_fold_index, test_fold_index]],
                                ignore_index=True)
+
+        print([i for i in range(5) if i not in [valid_fold_index, test_fold_index]])
+
         train_data = train_data.sample(frac=1).reset_index(drop=True)
         # return all rows, avoid inserting the old index as a column in the new DataFrame
 
