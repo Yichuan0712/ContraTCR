@@ -22,16 +22,16 @@ def get_model(configs):
     return encoder
 
 
-def prepare_esm_model(model_name, configs):
-    model = EsmModel.from_pretrained(model_name)
+def get_esm(configs):
+    model = EsmModel.from_pretrained(configs.encoder_name)
     # Freeze all layers
     for param in model.parameters():
         param.requires_grad = False
-    elif configs.training_mode  == "frozen":
+    if configs.training_mode == "frozen":
         # Freeze all layers
         for param in model.parameters():
             param.requires_grad = False
-    elif configs.PEFT == "PFT":
+    elif configs.training_mode == "PFT":
         # Allow the parameters of the last transformer block to be updated during fine-tuning
         for param in model.encoder.layer[configs.train_settings.fine_tune_lr:].parameters():
             param.requires_grad = True
@@ -44,7 +44,7 @@ class Encoder(nn.Module):
         super().__init__()
         self.model_type = model_type
         if model_type == 'esm_v2':
-            self.model = prepare_esm_model(model_name, configs)
+            self.model = get_esm(configs)
         # self.pooling_layer = nn.AdaptiveAvgPool2d((None, 1))
         self.combine = configs.decoder.combine
         self.combine_DNN = configs.decoder.combine_DNN
