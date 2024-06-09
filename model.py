@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer
 from torch import nn
 from transformers import EsmModel
+from util import printl
 
 
 def get_tokenizer(configs):
@@ -13,10 +14,7 @@ def get_tokenizer(configs):
 
 def get_model(configs):
     if 'facebook/esm2' in configs.encoder_name:
-        encoder = Encoder(model_name=configs.encoder.model_name,
-                          model_type=configs.encoder.model_type,
-                          configs=configs
-                          )
+        encoder = Encoder(configs=configs)
     else:
         raise ValueError("Wrong model specified")
     return encoder
@@ -31,12 +29,15 @@ def get_esm(configs):
         # Freeze all layers
         for param in model.parameters():
             param.requires_grad = False
-    elif configs.training_mode == "PFT":
+        print("All model parameters have been frozen.")
+    elif configs.training_mode == "finetune":
         # Allow the parameters of the last transformer block to be updated during fine-tuning
-        for param in model.encoder.layer[configs.train_settings.fine_tune_lr:].parameters():
+        for param in model.encoder.layer[configs.train_settings.fine_tune_layer:].parameters():
             param.requires_grad = True
+        print(f"Parameters in the last {len(model.encoder.layer) - configs.train_settings.fine_tune_layer} layers are trainable.")
         for param in model.pooler.parameters():
             param.requires_grad = False
+        print("Pooling layer parameters have been frozen.")
     return model
 
 class Encoder(nn.Module):
