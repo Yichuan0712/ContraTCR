@@ -9,7 +9,7 @@ def get_tokenizer(configs):
     if configs.model_scheme == 'esm2':
         tokenizer = AutoTokenizer.from_pretrained(configs.encoder_name)
     else:
-        raise ValueError("Wrong tokenizer specified.")
+        raise ValueError("Wrong model_scheme specified for get_tokenizer.")
     return tokenizer
 
 
@@ -17,7 +17,7 @@ def get_model(configs, log_path):
     if configs.model_scheme == 'esm2':
         encoder = Encoder(configs=configs, log_path=log_path)
     else:
-        raise ValueError("Wrong model specified")
+        raise ValueError("Wrong model_scheme specified for get_model")
     return encoder
 
 
@@ -40,7 +40,7 @@ def get_esm(configs, log_path):
             param.requires_grad = False
         printl("Pooling layer parameters have been frozen.", log_path=log_path)
     else:
-        raise ValueError("Wrong training model specified.")
+        raise ValueError("Wrong training_mode specified for get_esm.")
     return model
 
 class Encoder(nn.Module):
