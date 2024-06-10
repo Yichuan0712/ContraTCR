@@ -53,7 +53,7 @@ class Encoder(nn.Module):
 
 class LayerNormNet(nn.Module):
     """
-    Thanks to https://github.com/tttianhao/CLEAN
+    Acknowledgment: This implementation was inspired by https://github.com/tttianhao/CLEAN
     """
     def __init__(self, configs, hidden_dim=512, out_dim=256):
         super(LayerNormNet, self).__init__()
