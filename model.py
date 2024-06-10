@@ -43,6 +43,7 @@ def get_esm(configs, log_path):
         raise ValueError("Wrong training_mode specified for get_esm.")
     return model
 
+
 class Encoder(nn.Module):
     def __init__(self, configs, log_path):
         super().__init__()
@@ -52,6 +53,7 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         return x
+
 
 class LayerNormNet(nn.Module):
     """
