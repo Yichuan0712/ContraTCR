@@ -56,7 +56,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
         torch.random.manual_seed(configs.fix_seed)
         np.random.seed(configs.fix_seed)
         printl(f"{'=' * 128}", log_path=log_path)
-        printl(f'Random seed set to {configs.fix_seed}')
+        printl(f'Random seed set to {configs.fix_seed}.')
     """
     Fold Split
     """
@@ -71,7 +71,7 @@ def main(parse_args, configs, valid_fold_index, test_fold_index):
     """
     printl(f"{'=' * 128}", log_path=log_path)
     dataloaders_dict = get_dataloader(configs, valid_fold_index, test_fold_index)
-    printl("Data Loading Complete.")
+    printl("Data loading complete.")
     printl(f'Number of Steps for Training Data: {len(dataloaders_dict["train"])}', log_path=log_path)
     printl(f'Number of Steps for Validation Data: {len(dataloaders_dict["valid"])}', log_path=log_path)
     printl(f'Number of Steps for Test Data: {len(dataloaders_dict["test"])}', log_path=log_path)
