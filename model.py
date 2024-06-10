@@ -44,27 +44,27 @@ def get_esm(configs, log_path):
     return model
 
 
-def get_optimizer(net, configs, num_train_samples, logfilepath):
-    optimizer, scheduler = load_opt(net, configs)
-    if configs.optimizer.mode == "skip":
-        scheduler = None
-    else:
-        if scheduler is None:
-            if configs.optimizer.decay.first_cycle_steps:
-                first_cycle_steps = configs.optimizer.decay.first_cycle_steps
-            else:
-                first_cycle_steps=np.ceil(
-                    num_train_samples / configs.train_settings.grad_accumulation) * configs.train_settings.num_epochs / configs.optimizer.decay.num_restarts
-            print("first_cycle_steps="+str(first_cycle_steps))
-            scheduler = CosineAnnealingWarmupRestarts(
-                optimizer,
-                first_cycle_steps=first_cycle_steps,
-                cycle_mult=1.0,
-                max_lr=configs.optimizer.lr,
-                min_lr=configs.optimizer.decay.min_lr,
-                warmup_steps=configs.optimizer.decay.warmup,
-                gamma=configs.optimizer.decay.gamma)
-    return optimizer, scheduler
+# def get_optimizer(net, configs, num_train_samples, logfilepath):
+#     optimizer, scheduler = load_opt(net, configs)
+#     if configs.optimizer.mode == "skip":
+#         scheduler = None
+#     else:
+#         if scheduler is None:
+#             if configs.optimizer.decay.first_cycle_steps:
+#                 first_cycle_steps = configs.optimizer.decay.first_cycle_steps
+#             else:
+#                 first_cycle_steps=np.ceil(
+#                     num_train_samples / configs.train_settings.grad_accumulation) * configs.train_settings.num_epochs / configs.optimizer.decay.num_restarts
+#             print("first_cycle_steps="+str(first_cycle_steps))
+#             scheduler = CosineAnnealingWarmupRestarts(
+#                 optimizer,
+#                 first_cycle_steps=first_cycle_steps,
+#                 cycle_mult=1.0,
+#                 max_lr=configs.optimizer.lr,
+#                 min_lr=configs.optimizer.decay.min_lr,
+#                 warmup_steps=configs.optimizer.decay.warmup,
+#                 gamma=configs.optimizer.decay.gamma)
+#     return optimizer, scheduler
 
 
 class Encoder(nn.Module):
