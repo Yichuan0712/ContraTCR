@@ -6,7 +6,7 @@ from util import printl
 
 
 def get_tokenizer(configs):
-    if configs.model_scheme == 'esm2':
+    if configs.model_scheme.lower() == 'esm2':
         tokenizer = AutoTokenizer.from_pretrained(configs.encoder_name)
     else:
         raise ValueError("Wrong model_scheme specified for get_tokenizer.")
@@ -14,7 +14,7 @@ def get_tokenizer(configs):
 
 
 def get_model(configs, log_path):
-    if configs.model_scheme == 'esm2':
+    if configs.model_scheme.lower() == 'esm2':
         encoder = Encoder(configs=configs, log_path=log_path)
     else:
         raise ValueError("Wrong model_scheme specified for get_model")
@@ -26,12 +26,12 @@ def get_esm(configs, log_path):
     # Freeze all layers
     for param in model.parameters():
         param.requires_grad = False
-    if configs.training_mode == "frozen":
+    if configs.training_mode.lower() == "frozen":
         # Freeze all layers
         for param in model.parameters():
             param.requires_grad = False
         printl("All model parameters have been frozen.", log_path=log_path)
-    elif configs.training_mode == "finetune":
+    elif configs.training_mode.lower() == "finetune":
         # Allow the parameters of the last transformer block to be updated during fine-tuning
         for param in model.encoder.layer[configs.finetune_layer:].parameters():
             param.requires_grad = True
@@ -42,6 +42,29 @@ def get_esm(configs, log_path):
     else:
         raise ValueError("Wrong training_mode specified for get_esm.")
     return model
+
+
+def get_optimizer(net, configs, num_train_samples, logfilepath):
+    optimizer, scheduler = load_opt(net, configs)
+    if configs.optimizer.mode == "skip":
+        scheduler = None
+    else:
+        if scheduler is None:
+            if configs.optimizer.decay.first_cycle_steps:
+                first_cycle_steps = configs.optimizer.decay.first_cycle_steps
+            else:
+                first_cycle_steps=np.ceil(
+                    num_train_samples / configs.train_settings.grad_accumulation) * configs.train_settings.num_epochs / configs.optimizer.decay.num_restarts
+            print("first_cycle_steps="+str(first_cycle_steps))
+            scheduler = CosineAnnealingWarmupRestarts(
+                optimizer,
+                first_cycle_steps=first_cycle_steps,
+                cycle_mult=1.0,
+                max_lr=configs.optimizer.lr,
+                min_lr=configs.optimizer.decay.min_lr,
+                warmup_steps=configs.optimizer.decay.warmup,
+                gamma=configs.optimizer.decay.gamma)
+    return optimizer, scheduler
 
 
 class Encoder(nn.Module):
