@@ -6,7 +6,7 @@ from util import printl
 
 
 def get_tokenizer(configs):
-    if 'facebook/esm2' in configs.encoder_name:
+    if configs.model_scheme == 'esm2':
         tokenizer = AutoTokenizer.from_pretrained(configs.encoder_name)
     else:
         raise ValueError("Wrong tokenizer specified.")
@@ -14,7 +14,7 @@ def get_tokenizer(configs):
 
 
 def get_model(configs, log_path):
-    if 'facebook/esm2' in configs.encoder_name:
+    if configs.model_scheme == 'esm2':
         encoder = Encoder(configs=configs, log_path=log_path)
     else:
         raise ValueError("Wrong model specified")
@@ -39,6 +39,8 @@ def get_esm(configs, log_path):
         for param in model.pooler.parameters():
             param.requires_grad = False
         printl("Pooling layer parameters have been frozen.", log_path=log_path)
+    else:
+        raise ValueError("Wrong training model specified.")
     return model
 
 class Encoder(nn.Module):
@@ -53,7 +55,7 @@ class Encoder(nn.Module):
 
 class LayerNormNet(nn.Module):
     """
-    Acknowledgment: This implementation was inspired by https://github.com/tttianhao/CLEAN
+    This implementation was inspired by https://github.com/tttianhao/CLEAN
     """
     def __init__(self, configs, hidden_dim=512, out_dim=256):
         super(LayerNormNet, self).__init__()

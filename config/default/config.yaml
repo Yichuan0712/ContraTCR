@@ -2,6 +2,8 @@ fix_seed: 42
 description: "ContraTCR by Yichuan"
 dataset: "mini"
 batch_size: 16
+
+model_scheme: "esm2"
 encoder_name:  facebook/esm2_t33_650M_UR50D
   # facebook/esm2_t33_650M_UR50D,
   # facebook/esm2_t30_150M_UR50D,
