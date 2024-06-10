@@ -62,7 +62,6 @@ class LayerNormNet(nn.Module):
         self.drop_out = configs.supcon.drop_out
         self.device = configs.train_settings.device
         self.dtype = torch.float32
-
         feature_dim = {"facebook/esm2_t6_8M_UR50D": 320, "facebook/esm2_t33_650M_UR50D": 1280,
                        "facebook/esm2_t30_150M_UR50D": 640, "facebook/esm2_t12_35M_UR50D": 480}
         self.fc1 = nn.Linear(feature_dim[configs.encoder.model_name], hidden_dim, dtype=self.dtype, device=self.device)
