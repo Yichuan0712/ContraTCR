@@ -34,7 +34,7 @@ def get_esm(configs, log_path):
         # Allow the parameters of the last transformer block to be updated during fine-tuning
         for param in model.encoder.layer[configs.finetune_layer:].parameters():
             param.requires_grad = True
-        printl(f"Parameters in the last {len(model.encoder.layer) - configs.finetune_layer} layers are trainable.", log_path=log_path)
+        printl(f"Parameters in the last {0 - configs.finetune_layer} layers are trainable.", log_path=log_path)
         for param in model.pooler.parameters():
             param.requires_grad = False
         printl("Pooling layer parameters have been frozen.", log_path=log_path)
